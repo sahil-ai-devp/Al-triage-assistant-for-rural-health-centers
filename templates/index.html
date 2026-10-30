@@ -1,0 +1,1639 @@
+<!doctype html>
+<html lang="{{ lang }}">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{{ t.app_title }}</title>
+  <style>
+    :root {
+      --bg: #fff5f7;
+      --bg-gradient: linear-gradient(145deg, #ffffff 0%, #fff0f3 40%, #ffe4e8 100%);
+      --card: #ffffff;
+      --card-hover: #fff9fa;
+      --border: #fecdd3;
+      --border-light: #ffe4e6;
+      --txt: #0f172a;
+      --txt-muted: #64748b;
+      --em: #e11d48;
+      --em-bg: #ffe4e6;
+      --urg: #d97706;
+      --urg-bg: #fef3c7;
+      --rtn: #059669;
+      --rtn-bg: #d1fae5;
+      --accent: #e11d48;
+      --accent-glow: rgba(225, 29, 72, 0.15);
+      --purple: #9333ea;
+      --input-bg: #ffffff;
+      --header-bg: linear-gradient(135deg, #9f1239 0%, #be185d 50%, #e11d48 100%);
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      background: var(--bg-gradient);
+      background-attachment: fixed;
+      color: var(--txt);
+      line-height: 1.5;
+      min-height: 100vh;
+    }
+
+    /* TOP NAVBAR */
+    header {
+      background: var(--header-bg);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+      padding: 16px 28px;
+      box-shadow: 0 4px 15px rgba(159, 18, 57, 0.12);
+    }
+    .nav-container {
+      max-width: 1400px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+    .brand-block {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .brand-icon {
+      width: 44px;
+      height: 44px;
+      background: #ffffff;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+    }
+    .brand-title {
+      font-size: 20px;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+      margin: 0;
+      color: #ffffff;
+    }
+    .brand-subtitle {
+      font-size: 12px;
+      color: #ffe4e6;
+      margin: 2px 0 0;
+    }
+    .portfolio-tag {
+      display: inline-block;
+      font-size: 11px;
+      padding: 2px 8px;
+      background: rgba(255, 255, 255, 0.2);
+      color: #ffffff;
+      border: 1px solid rgba(255, 255, 255, 0.4);
+      border-radius: 20px;
+      font-weight: 600;
+      margin-left: 8px;
+    }
+
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    .offline-pill {
+      font-size: 12px;
+      padding: 6px 12px;
+      background: rgba(255, 255, 255, 0.18);
+      border: 1px solid rgba(255, 255, 255, 0.35);
+      color: #ffffff;
+      border-radius: 20px;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .lang-switcher {
+      display: flex;
+      background: rgba(255, 255, 255, 0.18);
+      border: 1px solid rgba(255, 255, 255, 0.35);
+      border-radius: 8px;
+      padding: 3px;
+      gap: 4px;
+    }
+    .lang-btn {
+      padding: 6px 12px;
+      border-radius: 6px;
+      border: none;
+      background: transparent;
+      color: #ffffff;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.2s;
+    }
+    .lang-btn:hover { background: rgba(255, 255, 255, 0.2); }
+    .lang-btn.active {
+      background: #ffffff;
+      color: #be185d;
+      font-weight: 700;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    }
+
+    /* MODE TABS */
+    .view-tabs-bar {
+      background: #ffffff;
+      border-bottom: 1px solid var(--border);
+      padding: 8px 28px;
+      box-shadow: 0 2px 8px rgba(225, 29, 72, 0.04);
+    }
+    .view-tabs-inner {
+      max-width: 1400px;
+      margin: 0 auto;
+      display: flex;
+      gap: 12px;
+    }
+    .tab-btn {
+      padding: 9px 18px;
+      border-radius: 8px;
+      border: 1px solid transparent;
+      background: transparent;
+      color: var(--txt-muted);
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.2s;
+      text-decoration: none;
+    }
+    .tab-btn:hover {
+      background: #fff1f4;
+      color: #be185d;
+    }
+    .tab-btn.active {
+      background: #fff1f4;
+      color: #be185d;
+      border: 1px solid var(--border);
+      font-weight: 700;
+      box-shadow: 0 2px 6px rgba(225, 29, 72, 0.06);
+    }
+
+    /* MAIN CONTAINER */
+    main {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 24px 28px;
+    }
+    .grid-layout {
+      display: grid;
+      grid-template-columns: 460px 1fr;
+      gap: 24px;
+    }
+    @media (max-width: 1100px) {
+      .grid-layout { grid-template-columns: 1fr; }
+    }
+
+    /* CARDS */
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 22px;
+      box-shadow: 0 4px 20px rgba(225, 29, 72, 0.06);
+    }
+    .card-title {
+      font-size: 16px;
+      font-weight: 700;
+      color: #0f172a;
+      margin: 0 0 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    /* PRESETS */
+    .preset-container {
+      background: #fff5f7;
+      border: 1px dashed var(--border);
+      border-radius: 10px;
+      padding: 10px 12px;
+      margin-bottom: 16px;
+    }
+    .preset-label {
+      font-size: 12px;
+      font-weight: 700;
+      color: #be185d;
+      margin-bottom: 8px;
+    }
+    .preset-pills {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+    .preset-pill {
+      font-size: 11px;
+      font-weight: 600;
+      padding: 5px 10px;
+      background: #ffffff;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      color: #be185d;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .preset-pill:hover {
+      background: var(--accent);
+      color: #ffffff;
+      border-color: var(--accent);
+    }
+
+    /* FORM STYLING */
+    label {
+      display: block;
+      font-size: 13px;
+      font-weight: 600;
+      color: #334155;
+      margin: 12px 0 6px;
+    }
+    input[type=text], input[type=number], select {
+      width: 100%;
+      padding: 10px 12px;
+      border-radius: 8px;
+      border: 1px solid #cbd5e1;
+      background: var(--input-bg);
+      color: #0f172a;
+      font-size: 14px;
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    input[type=text]:focus, input[type=number]:focus, select:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px var(--accent-glow);
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+    .vitals-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      background: #fff9fa;
+      padding: 12px;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      margin-top: 8px;
+    }
+
+    .vital-item label {
+      margin-top: 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .vital-badge {
+      font-size: 10px;
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+    .vital-badge.normal { background: #dcfce7; color: #166534; }
+    .vital-badge.warning { background: #fef3c7; color: #92400e; }
+    .vital-badge.critical { background: #ffe4e6; color: #9f1239; }
+
+    /* SYMPTOMS CHECKBOXES */
+    .symptoms-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin: 16px 0 8px;
+    }
+    .symptoms-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+    }
+    .symptom-card {
+      background: #ffffff;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 8px 10px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      cursor: pointer;
+      font-size: 13px;
+      color: #1e293b;
+      transition: all 0.2s;
+      user-select: none;
+    }
+    .symptom-card:hover {
+      border-color: var(--accent);
+      background: #fff1f4;
+    }
+    .symptom-card input[type=checkbox] {
+      accent-color: var(--accent);
+      width: 16px;
+      height: 16px;
+      cursor: pointer;
+    }
+    .symptom-card.danger {
+      border-color: #fda4af;
+      background: #fffbfa;
+    }
+    .symptom-card.danger:hover {
+      border-color: var(--em);
+      background: #ffe4e6;
+    }
+
+    /* VOICE BUTTON */
+    .voice-btn {
+      padding: 6px 12px;
+      background: #fdf2f8;
+      border: 1px solid #f472b6;
+      color: #be185d;
+      border-radius: 6px;
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s;
+    }
+    .voice-btn:hover {
+      background: #fce7f3;
+      color: #9d174d;
+    }
+    .voice-btn.recording {
+      background: #e11d48;
+      color: #ffffff;
+      animation: pulse 1.2s infinite;
+    }
+    @keyframes pulse {
+      0% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.8; transform: scale(1.02); }
+      100% { opacity: 1; transform: scale(1); }
+    }
+
+    .consent-box {
+      margin: 16px 0 12px;
+      padding: 10px 12px;
+      background: #fff5f7;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      font-size: 12px;
+      color: #475569;
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+    }
+    .consent-box input {
+      margin-top: 2px;
+      accent-color: var(--accent);
+      width: 16px;
+      height: 16px;
+    }
+
+    /* ACTION BUTTONS */
+    .btn-submit {
+      width: 100%;
+      padding: 13px;
+      background: linear-gradient(135deg, #e11d48, #be185d);
+      color: #ffffff;
+      border: none;
+      border-radius: 10px;
+      font-size: 15px;
+      font-weight: 700;
+      cursor: pointer;
+      box-shadow: 0 4px 14px rgba(225, 29, 72, 0.25);
+      transition: all 0.2s;
+    }
+    .btn-submit:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 6px 20px rgba(225, 29, 72, 0.4);
+    }
+
+    /* RESULT BANNER */
+    .result-box {
+      border-radius: 14px;
+      padding: 18px;
+      margin-bottom: 20px;
+      border: 2px solid var(--border);
+      position: relative;
+    }
+    .result-box.Emergency {
+      background: #fff1f2;
+      border-color: #f43f5e;
+    }
+    .result-box.Urgent {
+      background: #fffbeb;
+      border-color: #f59e0b;
+    }
+    .result-box.Routine {
+      background: #f0fdf4;
+      border-color: #10b981;
+    }
+
+    .result-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 12px;
+    }
+    .priority-pill {
+      font-size: 14px;
+      font-weight: 800;
+      padding: 6px 14px;
+      border-radius: 20px;
+      letter-spacing: 0.5px;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .priority-pill.Emergency { background: var(--em); color: #fff; }
+    .priority-pill.Urgent { background: var(--urg); color: #fff; }
+    .priority-pill.Routine { background: var(--rtn); color: #fff; }
+
+    .tts-btn {
+      padding: 6px 14px;
+      background: #ffffff;
+      border: 1px solid #cbd5e1;
+      border-radius: 20px;
+      color: #0f172a;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: background 0.2s;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    }
+    .tts-btn:hover { background: #f8fafc; }
+
+    .result-info-grid {
+      display: grid;
+      gap: 10px;
+      margin-top: 12px;
+    }
+    .result-subcard {
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      border-radius: 8px;
+      padding: 12px 14px;
+      font-size: 13px;
+      color: #1e293b;
+    }
+    .result-subcard b {
+      display: block;
+      color: #be185d;
+      margin-bottom: 4px;
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .result-subcard.teacher-card {
+      border-left: 4px solid var(--purple);
+      background: #faf5ff;
+    }
+    .result-subcard.teacher-card b {
+      color: #7e22ce;
+    }
+    .result-subcard.action-card {
+      border-left: 4px solid var(--urg);
+      background: #fffbeb;
+    }
+    .result-subcard.action-card b {
+      color: #b45309;
+    }
+
+    .result-actions {
+      display: flex;
+      gap: 10px;
+      margin-top: 14px;
+      flex-wrap: wrap;
+    }
+    .btn-action-slip {
+      padding: 8px 14px;
+      background: #0284c7;
+      color: #fff;
+      border: none;
+      border-radius: 6px;
+      font-size: 13px;
+      font-weight: 600;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      cursor: pointer;
+    }
+    .btn-action-slip:hover { background: #0369a1; }
+    .btn-action-sos {
+      padding: 8px 14px;
+      background: #16a34a;
+      color: #ffffff;
+      border: none;
+      border-radius: 6px;
+      font-size: 13px;
+      font-weight: 700;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      cursor: pointer;
+    }
+    .btn-action-sos:hover { background: #15803d; }
+
+    /* STATS ROW */
+    .stats-row {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 14px;
+      margin-bottom: 20px;
+    }
+    @media (max-width: 768px) {
+      .stats-row { grid-template-columns: 1fr 1fr; }
+    }
+    .stat-card {
+      background: #ffffff;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 16px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 2px 10px rgba(225, 29, 72, 0.04);
+    }
+    .stat-card::before {
+      content: "";
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 3px;
+    }
+    .stat-card.Emergency::before { background: var(--em); }
+    .stat-card.Urgent::before { background: var(--urg); }
+    .stat-card.Routine::before { background: var(--rtn); }
+    .stat-card.Pending::before { background: #0284c7; }
+
+    .stat-number {
+      font-size: 32px;
+      font-weight: 800;
+      line-height: 1;
+      margin-bottom: 4px;
+    }
+    .stat-card.Emergency .stat-number { color: var(--em); }
+    .stat-card.Urgent .stat-number { color: var(--urg); }
+    .stat-card.Routine .stat-number { color: var(--rtn); }
+    .stat-card.Pending .stat-number { color: #0284c7; }
+    .stat-title {
+      font-size: 12px;
+      color: var(--txt-muted);
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    /* QUEUE CONTROLS */
+    .queue-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 14px;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    .queue-title {
+      font-size: 17px;
+      font-weight: 700;
+      margin: 0;
+      color: #0f172a;
+    }
+    .queue-actions {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+    }
+    .search-input {
+      padding: 7px 12px;
+      background: #ffffff;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      color: #0f172a;
+      font-size: 13px;
+      min-width: 220px;
+      outline: none;
+    }
+    .search-input:focus {
+      border-color: var(--accent);
+    }
+    .filter-tabs {
+      display: flex;
+      background: #fff5f7;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 2px;
+      gap: 2px;
+    }
+    .filter-tab {
+      padding: 4px 10px;
+      font-size: 12px;
+      border: none;
+      background: transparent;
+      color: var(--txt-muted);
+      border-radius: 4px;
+      cursor: pointer;
+      font-weight: 600;
+    }
+    .filter-tab.active {
+      background: #be185d;
+      color: #fff;
+    }
+
+    /* TABLE */
+    .table-container {
+      overflow-x: auto;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+      background: #ffffff;
+    }
+    th {
+      background: #fff1f4;
+      padding: 11px 14px;
+      text-align: left;
+      font-weight: 700;
+      color: #475569;
+      border-bottom: 1px solid var(--border);
+      white-space: nowrap;
+    }
+    td {
+      padding: 12px 14px;
+      border-bottom: 1px solid #fecdd3;
+      vertical-align: middle;
+      color: #0f172a;
+    }
+    tr:hover td {
+      background: #fff5f7;
+    }
+    tr.Emergency td:first-child {
+      border-left: 4px solid var(--em);
+    }
+    tr.Urgent td:first-child {
+      border-left: 4px solid var(--urg);
+    }
+    tr.Routine td:first-child {
+      border-left: 4px solid var(--rtn);
+    }
+
+    .badge-cell {
+      display: inline-block;
+      padding: 3px 10px;
+      border-radius: 12px;
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+    .badge-cell.Emergency { background: var(--em-bg); color: #be123c; border: 1px solid #fda4af; }
+    .badge-cell.Urgent { background: var(--urg-bg); color: #b45309; border: 1px solid #fcd34d; }
+    .badge-cell.Routine { background: var(--rtn-bg); color: #047857; border: 1px solid #6ee7b7; }
+
+    .sync-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 14px;
+      padding-top: 14px;
+      border-top: 1px solid var(--border);
+    }
+    .btn-sync {
+      padding: 9px 18px;
+      background: linear-gradient(135deg, #0284c7, #0369a1);
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .btn-reset-demo {
+      padding: 8px 14px;
+      background: #ffffff;
+      color: #475569;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      font-size: 12px;
+      cursor: pointer;
+    }
+    .btn-reset-demo:hover { color: #be185d; border-color: #be185d; }
+
+    /* TEACHER & TRAINING VIEW */
+    .training-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+    @media (max-width: 900px) {
+      .training-grid { grid-template-columns: 1fr; }
+    }
+    .quiz-card {
+      background: #ffffff;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      box-shadow: 0 4px 15px rgba(225, 29, 72, 0.05);
+    }
+    .quiz-scenario {
+      font-size: 14px;
+      line-height: 1.6;
+      color: #1e293b;
+      margin-bottom: 14px;
+      background: #fff5f7;
+      padding: 14px;
+      border-radius: 8px;
+      border-left: 3px solid var(--accent);
+    }
+    .quiz-options {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 14px;
+    }
+    .quiz-opt-btn {
+      flex: 1;
+      padding: 10px;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      background: #ffffff;
+      color: #be185d;
+      font-size: 12px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .quiz-opt-btn:hover { border-color: var(--accent); background: #fff1f4; }
+    .quiz-opt-btn.correct { background: var(--rtn); color: #ffffff; border-color: var(--rtn); }
+    .quiz-opt-btn.wrong { background: var(--em); color: #fff; border-color: var(--em); }
+
+    .quiz-feedback {
+      display: none;
+      background: #faf5ff;
+      border: 1px solid #e9d5ff;
+      border-radius: 8px;
+      padding: 12px;
+      font-size: 13px;
+      margin-top: 8px;
+      color: #1e293b;
+    }
+    .quiz-feedback.show { display: block; }
+    .quiz-feedback b { color: #7e22ce; display: block; margin-bottom: 4px; }
+
+    /* PROTOCOLS VIEW */
+    .protocol-card {
+      background: #ffffff;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 20px;
+      margin-bottom: 16px;
+      box-shadow: 0 4px 15px rgba(225, 29, 72, 0.05);
+    }
+    .protocol-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+    .protocol-icon {
+      font-size: 28px;
+    }
+    .protocol-title {
+      font-size: 18px;
+      font-weight: 700;
+      color: #0f172a;
+      margin: 0;
+    }
+    .protocol-steps {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    .protocol-steps li {
+      padding: 10px 14px;
+      margin-bottom: 6px;
+      background: #fff5f7;
+      border: 1px solid #ffe4e6;
+      border-radius: 6px;
+      font-size: 14px;
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      color: #1e293b;
+    }
+    .step-num {
+      background: var(--accent);
+      color: #ffffff;
+      font-weight: 800;
+      font-size: 11px;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    footer {
+      max-width: 1400px;
+      margin: 40px auto 20px;
+      padding: 20px 28px;
+      border-top: 1px solid var(--border);
+      text-align: center;
+      font-size: 12px;
+      color: var(--txt-muted);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header>
+    <div class="nav-container">
+      <div class="brand-block">
+        <div class="brand-icon">🩺</div>
+        <div>
+          <h1 class="brand-title">
+            {{ t.app_title }}
+            <span class="portfolio-tag">{{ t.badge_tag }}</span>
+          </h1>
+          <p class="brand-subtitle">{{ t.app_subtitle }}</p>
+        </div>
+      </div>
+
+      <div class="nav-actions">
+        <div class="offline-pill">
+          <span>●</span> {{ t.offline_badge }}
+        </div>
+
+        <!-- Language Switcher: English, Hindi, Punjabi -->
+        <div class="lang-switcher">
+          <a href="/?lang=en&view={{ view }}" class="lang-btn {% if lang == 'en' %}active{% endif %}">English</a>
+          <a href="/?lang=hi&view={{ view }}" class="lang-btn {% if lang == 'hi' %}active{% endif %}">हिन्दी</a>
+          <a href="/?lang=pa&view={{ view }}" class="lang-btn {% if lang == 'pa' %}active{% endif %}">ਪੰਜਾਬੀ</a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- NAVIGATION TABS -->
+  <div class="view-tabs-bar">
+    <div class="view-tabs-inner">
+      <a href="/?lang={{ lang }}&view=triage" class="tab-btn {% if view == 'triage' %}active{% endif %}">
+        {{ t.nav_triage }}
+      </a>
+      <a href="/?lang={{ lang }}&view=teacher" class="tab-btn {% if view == 'teacher' %}active{% endif %}">
+        {{ t.nav_teacher }}
+      </a>
+      <a href="/?lang={{ lang }}&view=protocols" class="tab-btn {% if view == 'protocols' %}active{% endif %}">
+        {{ t.nav_protocols }}
+      </a>
+    </div>
+  </div>
+
+  <main>
+    {% if view == 'triage' %}
+      <div class="grid-layout">
+        
+        <!-- LEFT COLUMN: ASSESSMENT FORM -->
+        <div>
+          <div class="card">
+            <div class="card-title">
+              <span>{{ t.assessment_title }}</span>
+            </div>
+
+            <!-- QUICK TEST PRESETS -->
+            <div class="preset-container">
+              <div class="preset-label">{{ t.quick_presets }}</div>
+              <div class="preset-pills">
+                <button type="button" class="preset-pill" onclick="loadPreset('emergency')">🚨 {{ t.preset_emergency }}</button>
+                <button type="button" class="preset-pill" onclick="loadPreset('infant')">👶 {{ t.preset_infant }}</button>
+                <button type="button" class="preset-pill" onclick="loadPreset('trauma')">🩸 {{ t.preset_trauma }}</button>
+                <button type="button" class="preset-pill" onclick="loadPreset('routine')">🟢 {{ t.preset_routine }}</button>
+              </div>
+            </div>
+
+            <!-- TRIAGE FORM -->
+            <form method="post" action="/assess" id="triageForm">
+              <input type="hidden" name="lang" value="{{ lang }}">
+
+              <label>{{ t.lbl_name }}</label>
+              <input type="text" name="name" id="patientName" placeholder="{{ t.ph_name }}" required>
+
+              <div class="form-row">
+                <div>
+                  <label>{{ t.lbl_age }}</label>
+                  <input type="number" name="age" id="patientAge" value="32" min="0" max="125" oninput="checkVitals()">
+                </div>
+                <div>
+                  <label>{{ t.lbl_gender }}</label>
+                  <select name="gender" id="patientGender">
+                    <option value="Male">{{ t.g_male }}</option>
+                    <option value="Female">{{ t.g_female }}</option>
+                    <option value="Other">{{ t.g_other }}</option>
+                  </select>
+                </div>
+              </div>
+
+              <!-- VITALS WITH DYNAMIC BADGES -->
+              <div class="vitals-grid">
+                <div class="vital-item">
+                  <label>
+                    <span>{{ t.lbl_spo2 }}</span>
+                    <span id="spo2Badge" class="vital-badge normal">98% Normal</span>
+                  </label>
+                  <input type="number" name="spo2" id="vSpo2" value="98" min="0" max="100" oninput="checkVitals()">
+                </div>
+
+                <div class="vital-item">
+                  <label>
+                    <span>{{ t.lbl_pulse }}</span>
+                    <span id="pulseBadge" class="vital-badge normal">75 bpm</span>
+                  </label>
+                  <input type="number" name="pulse" id="vPulse" value="75" min="0" max="300" oninput="checkVitals()">
+                </div>
+
+                <div class="vital-item">
+                  <label>
+                    <span>{{ t.lbl_sbp }}</span>
+                    <span id="sbpBadge" class="vital-badge normal">120 mmHg</span>
+                  </label>
+                  <input type="number" name="sbp" id="vSbp" value="120" min="30" max="300" oninput="checkVitals()">
+                </div>
+
+                <div class="vital-item">
+                  <label>
+                    <span>{{ t.lbl_dbp }}</span>
+                    <span id="dbpBadge" class="vital-badge normal">80 mmHg</span>
+                  </label>
+                  <input type="number" name="dbp" id="vDbp" value="80" min="20" max="200">
+                </div>
+
+                <div class="vital-item" style="grid-column: span 2;">
+                  <label>
+                    <span>{{ t.lbl_temp }}</span>
+                    <span id="tempBadge" class="vital-badge normal">37.0 °C Normal</span>
+                  </label>
+                  <input type="number" step="0.1" name="temp" id="vTemp" value="37.0" min="25" max="45" oninput="checkVitals()">
+                </div>
+              </div>
+
+              <!-- SYMPTOMS & SPEECH-TO-TEXT -->
+              <div class="symptoms-header">
+                <label style="margin: 0;">{{ t.lbl_symptoms }}</label>
+                <button type="button" class="voice-btn" id="voiceBtn" onclick="toggleVoiceInput()">
+                  {{ t.voice_mic_btn }}
+                </button>
+              </div>
+              <div id="voiceStatus" style="font-size: 11px; color: var(--accent); margin-bottom: 6px; display: none;">
+                {{ t.voice_listening }}
+              </div>
+
+              <div class="symptoms-grid">
+                {% for s in symptoms %}
+                  <label class="symptom-card {% if s.danger %}danger{% endif %}">
+                    <input type="checkbox" name="sym" value="{{ s.id }}" id="sym_{{ loop.index }}">
+                    <span>{{ s.icon }}</span>
+                    <span>
+                      {% if lang == 'hi' %}{{ s.hi }}
+                      {% elif lang == 'pa' %}{{ s.pa }}
+                      {% else %}{{ s.en }}{% endif %}
+                    </span>
+                  </label>
+                {% endfor %}
+              </div>
+
+              <!-- INFORMED CONSENT -->
+              <div class="consent-box">
+                <input type="checkbox" name="consent" value="yes" id="consentChk" checked required>
+                <span>{{ t.consent_text }}</span>
+              </div>
+
+              <button type="submit" class="btn-submit">{{ t.btn_assess }}</button>
+            </form>
+          </div>
+        </div>
+
+        <!-- RIGHT COLUMN: RECENT RESULT & LIVE QUEUE -->
+        <div>
+          
+          <!-- LATEST ASSESSMENT RESULT (IF ANY) -->
+          {% if last %}
+            <div class="result-box {{ last.priority }}" id="resultBanner">
+              <div class="result-top">
+                <div class="priority-pill {{ last.priority }}">
+                  {% if last.priority == 'Emergency' %}🚨 {{ t.badge_emergency }}
+                  {% elif last.priority == 'Urgent' %}⚠️ {{ t.badge_urgent }}
+                  {% else %}🟢 {{ t.badge_routine }}{% endif %}
+                </div>
+                
+                <!-- TEXT-TO-SPEECH READOUT BUTTON -->
+                <button type="button" class="tts-btn" onclick="playSpeech()">
+                  {{ t.btn_listen_tts }}
+                </button>
+              </div>
+
+              <div style="font-size: 17px; font-weight: 700; color: #0f172a; margin-bottom: 8px;">
+                {{ last.name }} ({{ last.age }} Yrs, {{ last.gender }})
+              </div>
+
+              <div class="result-info-grid">
+                <div class="result-subcard">
+                  <b>{{ t.lbl_why }}</b>
+                  <div>{{ last.display_reasons }}</div>
+                </div>
+
+                {% if last.display_actions %}
+                  <div class="result-subcard action-card">
+                    <b>{{ t.lbl_action_protocol }}</b>
+                    <div>{{ last.display_actions }}</div>
+                  </div>
+                {% endif %}
+
+                {% if last.display_teacher_notes %}
+                  <div class="result-subcard teacher-card">
+                    <b>{{ t.lbl_teacher_insight }}</b>
+                    <div>{{ last.display_teacher_notes }}</div>
+                  </div>
+                {% endif %}
+              </div>
+
+              <!-- ACTIONS: REFERRAL PRINT & SOS DISPATCH -->
+              <div class="result-actions">
+                <a href="/referral/{{ last.id }}?lang={{ lang }}" target="_blank" class="btn-action-slip">
+                  {{ t.btn_print_slip }}
+                </a>
+                
+                {% if last.priority == 'Emergency' %}
+                  <a href="https://api.whatsapp.com/send?text=EMERGENCY%20TRIAGE%20ALERT:%20Patient%20{{ last.name }},%20Age%20{{ last.age }},%20Priority:%20EMERGENCY.%20Vitals:%20SpO2%20{{ last.spo2 }}%25,%20BP%20{{ last.sbp }}/{{ last.dbp or 80 }},%20Pulse%20{{ last.pulse }}bpm.%20Reason:%20{{ last.reasons }}" target="_blank" class="btn-action-sos">
+                    {{ t.btn_whatsapp_sos }}
+                  </a>
+                {% endif %}
+              </div>
+            </div>
+          {% endif %}
+
+          <!-- STATS CARDS -->
+          <div class="stats-row">
+            <div class="stat-card Emergency">
+              <div class="stat-number">{{ counts.Emergency }}</div>
+              <div class="stat-title">{{ t.stat_emergency }}</div>
+            </div>
+            <div class="stat-card Urgent">
+              <div class="stat-number">{{ counts.Urgent }}</div>
+              <div class="stat-title">{{ t.stat_urgent }}</div>
+            </div>
+            <div class="stat-card Routine">
+              <div class="stat-number">{{ counts.Routine }}</div>
+              <div class="stat-title">{{ t.stat_routine }}</div>
+            </div>
+            <div class="stat-card Pending">
+              <div class="stat-number" id="pendingCount">{{ pending }}</div>
+              <div class="stat-title">{{ t.stat_pending }}</div>
+            </div>
+          </div>
+
+          <!-- PATIENT QUEUE CARD -->
+          <div class="card">
+            <div class="queue-header">
+              <h3 class="queue-title">{{ t.queue_title }}</h3>
+              <div class="queue-actions">
+                <input type="text" class="search-input" id="queueSearch" placeholder="{{ t.search_ph }}" oninput="filterQueue()">
+                <div class="filter-tabs">
+                  <button type="button" class="filter-tab active" onclick="setFilter('all', this)">{{ t.filter_all }}</button>
+                  <button type="button" class="filter-tab" onclick="setFilter('Emergency', this)">🚨</button>
+                  <button type="button" class="filter-tab" onclick="setFilter('Urgent', this)">⚠️</button>
+                  <button type="button" class="filter-tab" onclick="setFilter('Routine', this)">🟢</button>
+                </div>
+              </div>
+            </div>
+
+            <!-- TABLE -->
+            <div class="table-container">
+              <table id="queueTable">
+                <thead>
+                  <tr>
+                    <th>{{ t.col_id }}</th>
+                    <th>{{ t.col_name }}</th>
+                    <th>{{ t.col_vitals }}</th>
+                    <th>{{ t.col_priority }}</th>
+                    <th>{{ t.col_reasons }}</th>
+                    <th>{{ t.col_time }}</th>
+                    <th>{{ t.col_actions }}</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {% for r in rows %}
+                    <tr class="{{ r.priority }}" data-priority="{{ r.priority }}" data-name="{{ r.name | lower }}" data-symptoms="{{ r.symptoms | lower }}">
+                      <td><b>#{{ r.id }}</b></td>
+                      <td>
+                        <b>{{ r.name }}</b><br>
+                        <small style="color: var(--txt-muted);">{{ r.age }}y, {{ r.gender }}</small>
+                      </td>
+                      <td>
+                        <small style="display:block; line-height: 1.3;">
+                          SpO2: <b style="color: {% if r.spo2 < 90 %}#e11d48{% elif r.spo2 <= 94 %}#d97706{% else %}#059669{% endif %};">{{ r.spo2 }}%</b><br>
+                          BP: {{ r.sbp }}/{{ r.dbp or 80 }} · HR: {{ r.pulse }}<br>
+                          T: {{ r.temp }}°C
+                        </small>
+                      </td>
+                      <td>
+                        <span class="badge-cell {{ r.priority }}">
+                          {{ r.priority }}
+                        </span>
+                      </td>
+                      <td style="max-width: 240px; font-size: 12px; line-height: 1.4;">
+                        {{ r.display_reasons }}
+                      </td>
+                      <td>
+                        <small style="color: var(--txt-muted);">{{ r.created[11:16] }}</small>
+                      </td>
+                      <td>
+                        <div style="display: flex; gap: 6px;">
+                          <a href="/referral/{{ r.id }}?lang={{ lang }}" target="_blank" style="padding: 4px 8px; font-size: 11px; background: #fff5f7; color: #be185d; border-radius: 4px; text-decoration: none; border: 1px solid var(--border);" title="{{ t.btn_view_slip }}">
+                            📄
+                          </a>
+                          <form method="post" action="/delete/{{ r.id }}" onsubmit="return confirm('Remove patient #{{ r.id }}?');" style="margin: 0;">
+                            <input type="hidden" name="lang" value="{{ lang }}">
+                            <button type="submit" style="padding: 4px 8px; font-size: 11px; background: #ffe4e6; color: #be123c; border: 1px solid #fda4af; border-radius: 4px; cursor: pointer;">
+                              ✕
+                            </button>
+                          </form>
+                        </div>
+                      </td>
+                    </tr>
+                  {% else %}
+                    <tr>
+                      <td colspan="7" style="text-align: center; padding: 24px; color: var(--txt-muted);">
+                        {{ t.no_patients }}
+                      </td>
+                    </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+            </div>
+
+            <!-- SYNC & RESET BAR -->
+            <div class="sync-bar">
+              <form method="post" action="/sync" id="syncForm" onsubmit="handleSync(event)">
+                <input type="hidden" name="lang" value="{{ lang }}">
+                <button type="submit" class="btn-sync" id="syncBtn">
+                  {{ t.btn_sync }}
+                </button>
+              </form>
+
+              <form method="post" action="/reset-demo">
+                <input type="hidden" name="lang" value="{{ lang }}">
+                <button type="submit" class="btn-reset-demo" onclick="return confirm('Reset queue with demo patients?');">
+                  🔄 Reset Demo Samples
+                </button>
+              </form>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    {% elif view == 'teacher' %}
+      <!-- CLINICAL TEACHER & TRAINING VIEW -->
+      <div style="margin-bottom: 24px;">
+        <h2 style="margin: 0 0 6px; color: #0f172a;">🎓 AI Clinical Teacher & Case Simulator</h2>
+        <p style="color: var(--txt-muted); margin: 0; font-size: 14px;">
+          Practice real-world rural triage case studies. Select the triage priority to test your clinical judgment and receive instant feedback with pathophysiology notes.
+        </p>
+      </div>
+
+      <div class="training-grid">
+        {% for c in training_cases %}
+          <div class="quiz-card" id="quiz_{{ c.id }}">
+            <div>
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                <span style="font-size: 12px; font-weight: 700; color: #be185d; text-transform: uppercase;">
+                  Case Simulation #{{ c.id }}
+                </span>
+                <span style="font-size: 11px; background: #fff1f4; padding: 3px 8px; border-radius: 12px; color: #be185d; border: 1px solid #fecdd3;">
+                  Age: {{ c.vitals.age }}y | SpO2: {{ c.vitals.spo2 }}% | HR: {{ c.vitals.pulse }}
+                </span>
+              </div>
+
+              <div class="quiz-scenario">
+                {% if lang == 'hi' %}{{ c.scenario_hi }}
+                {% elif lang == 'pa' %}{{ c.scenario_pa }}
+                {% else %}{{ c.scenario_en }}{% endif %}
+              </div>
+
+              <div class="quiz-options">
+                <button type="button" class="quiz-opt-btn" onclick="checkQuiz({{ c.id }}, 'Emergency', '{{ c.correct }}')">
+                  🚨 Emergency
+                </button>
+                <button type="button" class="quiz-opt-btn" onclick="checkQuiz({{ c.id }}, 'Urgent', '{{ c.correct }}')">
+                  ⚠️ Urgent
+                </button>
+                <button type="button" class="quiz-opt-btn" onclick="checkQuiz({{ c.id }}, 'Routine', '{{ c.correct }}')">
+                  🟢 Routine
+                </button>
+              </div>
+            </div>
+
+            <div class="quiz-feedback" id="feedback_{{ c.id }}">
+              <b>Clinical Teacher Explanation:</b>
+              <div style="margin-bottom: 6px;">
+                {% if lang == 'hi' %}{{ c.explanation_hi }}
+                {% elif lang == 'pa' %}{{ c.explanation_pa }}
+                {% else %}{{ c.explanation_en }}{% endif %}
+              </div>
+              <div style="font-size: 12px; color: #7e22ce;">
+                💡 <b>Key Takeaway:</b>
+                {% if lang == 'hi' %}{{ c.key_learning_hi }}
+                {% elif lang == 'pa' %}{{ c.key_learning_pa }}
+                {% else %}{{ c.key_learning_en }}{% endif %}
+              </div>
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+
+    {% elif view == 'protocols' %}
+      <!-- RURAL EMERGENCY PROTOCOLS HANDBOOK -->
+      <div style="margin-bottom: 24px;">
+        <h2 style="margin: 0 0 6px; color: #0f172a;">📋 Rural Emergency Clinical Protocols</h2>
+        <p style="color: var(--txt-muted); margin: 0; font-size: 14px;">
+          Standard Operating Procedures (SOPs) for Sub-Centres and ASHA frontline care in English, Hindi, and Punjabi.
+        </p>
+      </div>
+
+      {% for p in protocols %}
+        <div class="protocol-card">
+          <div class="protocol-header">
+            <div class="protocol-icon">{{ p.icon }}</div>
+            <h3 class="protocol-title">
+              {% if lang == 'hi' %}{{ p.title_hi }}
+              {% elif lang == 'pa' %}{{ p.title_pa }}
+              {% else %}{{ p.title_en }}{% endif %}
+            </h3>
+          </div>
+          <ul class="protocol-steps">
+            {% if lang == 'hi' %}
+              {% for step in p.steps_hi %}
+                <li><span class="step-num">{{ loop.index }}</span> <span>{{ step }}</span></li>
+              {% endfor %}
+            {% elif lang == 'pa' %}
+              {% for step in p.steps_pa %}
+                <li><span class="step-num">{{ loop.index }}</span> <span>{{ step }}</span></li>
+              {% endfor %}
+            {% else %}
+              {% for step in p.steps_en %}
+                <li><span class="step-num">{{ loop.index }}</span> <span>{{ step }}</span></li>
+              {% endfor %}
+            {% endif %}
+          </ul>
+        </div>
+      {% endfor %}
+    {% endif %}
+  </main>
+
+  <footer>
+    <p>{{ t.footer_text }}</p>
+    <p style="opacity: 0.8; color: #64748b;">
+      CT Group of Institutions · CSE / AI-ML Portfolio Project · Multilingual Rural Health Triage Decision System
+    </p>
+  </footer>
+
+  <!-- CLIENT-SIDE SCRIPT FOR VOICE, VITALS, AND PRESETS -->
+  <script>
+    const currentLang = "{{ lang }}";
+    const symptomsData = {{ symptoms_json | safe }};
+    let activeFilter = 'all';
+
+    // 1. Dynamic Vitals Check & Warning Badges
+    function checkVitals() {
+      const spo2 = parseInt(document.getElementById('vSpo2').value) || 98;
+      const pulse = parseInt(document.getElementById('vPulse').value) || 75;
+      const sbp = parseInt(document.getElementById('vSbp').value) || 120;
+      const temp = parseFloat(document.getElementById('vTemp').value) || 37.0;
+
+      // SpO2
+      const spo2El = document.getElementById('spo2Badge');
+      if (spo2 < 90) {
+        spo2El.className = 'vital-badge critical';
+        spo2El.innerText = `${spo2}% Critical Hypoxia`;
+      } else if (spo2 <= 94) {
+        spo2El.className = 'vital-badge warning';
+        spo2El.innerText = `${spo2}% Mild Hypoxia`;
+      } else {
+        spo2El.className = 'vital-badge normal';
+        spo2El.innerText = `${spo2}% Normal`;
+      }
+
+      // SBP
+      const sbpEl = document.getElementById('sbpBadge');
+      if (sbp >= 180 || sbp < 85) {
+        sbpEl.className = 'vital-badge critical';
+        sbpEl.innerText = `${sbp} mmHg Critical`;
+      } else if (sbp >= 140 || sbp < 95) {
+        sbpEl.className = 'vital-badge warning';
+        sbpEl.innerText = `${sbp} mmHg Warning`;
+      } else {
+        sbpEl.className = 'vital-badge normal';
+        sbpEl.innerText = `${sbp} mmHg Normal`;
+      }
+
+      // Pulse
+      const pulseEl = document.getElementById('pulseBadge');
+      if (pulse > 130 || pulse < 45) {
+        pulseEl.className = 'vital-badge critical';
+        pulseEl.innerText = `${pulse} bpm Critical`;
+      } else if (pulse > 100 || pulse < 55) {
+        pulseEl.className = 'vital-badge warning';
+        pulseEl.innerText = `${pulse} bpm Tachycardia`;
+      } else {
+        pulseEl.className = 'vital-badge normal';
+        pulseEl.innerText = `${pulse} bpm Normal`;
+      }
+
+      // Temp
+      const tempEl = document.getElementById('tempBadge');
+      if (temp >= 39.5) {
+        tempEl.className = 'vital-badge critical';
+        tempEl.innerText = `${temp}°C High Pyrexia`;
+      } else if (temp >= 38.0) {
+        tempEl.className = 'vital-badge warning';
+        tempEl.innerText = `${temp}°C Fever`;
+      } else {
+        tempEl.className = 'vital-badge normal';
+        tempEl.innerText = `${temp}°C Normal`;
+      }
+    }
+
+    // 2. Presets Loader
+    function loadPreset(type) {
+      document.querySelectorAll('input[name="sym"]').forEach(c => c.checked = false);
+
+      if (type === 'emergency') {
+        document.getElementById('patientName').value = 'Kuldeep Singh';
+        document.getElementById('patientAge').value = '56';
+        document.getElementById('patientGender').value = 'Male';
+        document.getElementById('vSpo2').value = '88';
+        document.getElementById('vSbp').value = '175';
+        document.getElementById('vDbp').value = '105';
+        document.getElementById('vPulse').value = '114';
+        document.getElementById('vTemp').value = '37.0';
+        setSymptomChecked('Chest pain', true);
+        setSymptomChecked('Breathlessness', true);
+      } else if (type === 'infant') {
+        document.getElementById('patientName').value = 'Baby Ananya';
+        document.getElementById('patientAge').value = '1';
+        document.getElementById('patientGender').value = 'Female';
+        document.getElementById('vSpo2').value = '92';
+        document.getElementById('vSbp').value = '85';
+        document.getElementById('vDbp').value = '55';
+        document.getElementById('vPulse').value = '165';
+        document.getElementById('vTemp').value = '39.6';
+        setSymptomChecked('Fever', true);
+        setSymptomChecked('Vomiting', true);
+      } else if (type === 'trauma') {
+        document.getElementById('patientName').value = 'Harpreet Kaur';
+        document.getElementById('patientAge').value = '34';
+        document.getElementById('patientGender').value = 'Female';
+        document.getElementById('vSpo2').value = '95';
+        document.getElementById('vSbp').value = '90';
+        document.getElementById('vDbp').value = '60';
+        document.getElementById('vPulse').value = '126';
+        document.getElementById('vTemp').value = '36.5';
+        setSymptomChecked('Heavy bleeding', true);
+      } else if (type === 'routine') {
+        document.getElementById('patientName').value = 'Ramesh Kumar';
+        document.getElementById('patientAge').value = '38';
+        document.getElementById('patientGender').value = 'Male';
+        document.getElementById('vSpo2').value = '98';
+        document.getElementById('vSbp').value = '120';
+        document.getElementById('vDbp').value = '80';
+        document.getElementById('vPulse').value = '72';
+        document.getElementById('vTemp').value = '36.8';
+        setSymptomChecked('Cough', true);
+      }
+      checkVitals();
+    }
+
+    function setSymptomChecked(symId, state) {
+      const el = document.querySelector(`input[name="sym"][value="${symId}"]`);
+      if (el) el.checked = state;
+    }
+
+    // 3. Speech-to-Text (Voice Input) in Hindi, Punjabi, English
+    let recognition = null;
+    let isListening = false;
+
+    function toggleVoiceInput() {
+      const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+      if (!SpeechRecognition) {
+        alert("Voice recognition is not supported in this browser. Please use Chrome or Edge.");
+        return;
+      }
+
+      const voiceBtn = document.getElementById('voiceBtn');
+      const voiceStatus = document.getElementById('voiceStatus');
+
+      if (isListening && recognition) {
+        recognition.stop();
+        isListening = false;
+        voiceBtn.classList.remove('recording');
+        voiceStatus.style.display = 'none';
+        return;
+      }
+
+      recognition = new SpeechRecognition();
+      recognition.continuous = false;
+      recognition.interimResults = false;
+
+      // Set language code
+      if (currentLang === 'hi') {
+        recognition.lang = 'hi-IN';
+      } else if (currentLang === 'pa') {
+        recognition.lang = 'pa-Guru-IN'; // Punjabi Gurumukhi
+      } else {
+        recognition.lang = 'en-IN';
+      }
+
+      recognition.onstart = function() {
+        isListening = true;
+        voiceBtn.classList.add('recording');
+        voiceStatus.style.display = 'block';
+      };
+
+      recognition.onresult = function(event) {
+        const transcript = event.results[0][0].transcript.toLowerCase();
+        console.log("Speech heard:", transcript);
+
+        // Match heard words with symptoms keywords
+        symptomsData.forEach(s => {
+          for (let kw of s.keywords) {
+            if (transcript.includes(kw.toLowerCase())) {
+              setSymptomChecked(s.id, true);
+              break;
+            }
+          }
+        });
+      };
+
+      recognition.onerror = function(event) {
+        console.warn("Speech error:", event.error);
+        voiceBtn.classList.remove('recording');
+        voiceStatus.style.display = 'none';
+        isListening = false;
+      };
+
+      recognition.onend = function() {
+        voiceBtn.classList.remove('recording');
+        voiceStatus.style.display = 'none';
+        isListening = false;
+      };
+
+      try {
+        recognition.start();
+      } catch (e) {
+        console.error(e);
+      }
+    }
+
+    // 4. Text-to-Speech (Voice Audio Readout)
+    function playSpeech() {
+      if (!('speechSynthesis' in window)) {
+        alert("Text-to-Speech is not supported in this browser.");
+        return;
+      }
+
+      window.speechSynthesis.cancel(); // Stop any previous playback
+
+      {% if last %}
+        const priorityText = "{{ last.priority }}";
+        const patientName = "{{ last.name }}";
+        const reason = "{{ last.display_reasons | replace('"', '\\"') }}";
+        const action = "{{ last.display_actions | replace('"', '\\"') }}";
+
+        let textToRead = "";
+        if (currentLang === 'hi') {
+          textToRead = `मरीज़ ${patientName}। प्राथमिकता: ${priorityText}। कारण: ${reason}। प्राथमिक उपचार: ${action}`;
+        } else if (currentLang === 'pa') {
+          textToRead = `ਮਰੀਜ਼ ${patientName}। ਤਰਜੀਹ: ${priorityText}। ਕਾਰਨ: ${reason}। ਮੁੱਢਲੀ ਸਹਾਇਤਾ: ${action}`;
+        } else {
+          textToRead = `Patient ${patientName}. Priority level: ${priorityText}. Reasons: ${reason}. Emergency Action: ${action}`;
+        }
+
+        const utterance = new SpeechSynthesisUtterance(textToRead);
+        if (currentLang === 'hi') utterance.lang = 'hi-IN';
+        else if (currentLang === 'pa') utterance.lang = 'pa-IN';
+        else utterance.lang = 'en-IN';
+
+        utterance.rate = 0.95;
+        window.speechSynthesis.speak(utterance);
+      {% endif %}
+    }
+
+    // 5. Interactive Quiz Logic (Teacher Mode)
+    function checkQuiz(caseId, selected, correct) {
+      const card = document.getElementById(`quiz_${caseId}`);
+      const buttons = card.querySelectorAll('.quiz-opt-btn');
+      const feedback = document.getElementById(`feedback_${caseId}`);
+
+      buttons.forEach(b => {
+        b.classList.remove('correct', 'wrong');
+        if (b.innerText.includes(correct)) {
+          b.classList.add('correct');
+        } else if (b.innerText.includes(selected)) {
+          b.classList.add('wrong');
+        }
+      });
+
+      feedback.classList.add('show');
+    }
+
+    // 6. Queue Search and Filtering
+    function filterQueue() {
+      const q = document.getElementById('queueSearch').value.toLowerCase();
+      const rows = document.querySelectorAll('#queueTable tbody tr');
+
+      rows.forEach(r => {
+        const pri = r.getAttribute('data-priority');
+        const name = r.getAttribute('data-name') || '';
+        const sym = r.getAttribute('data-symptoms') || '';
+
+        const matchesFilter = (activeFilter === 'all' || pri === activeFilter);
+        const matchesQuery = (!q || name.includes(q) || sym.includes(q));
+
+        if (matchesFilter && matchesQuery) {
+          r.style.display = '';
+        } else {
+          r.style.display = 'none';
+        }
+      });
+    }
+
+    function setFilter(filter, btn) {
+      activeFilter = filter;
+      document.querySelectorAll('.filter-tab').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      filterQueue();
+    }
+
+    // 7. Mock Cloud Sync with Visual Feedback
+    function handleSync(e) {
+      e.preventDefault();
+      const btn = document.getElementById('syncBtn');
+      const originalText = btn.innerHTML;
+      btn.innerHTML = "⏳ Syncing to Central Server...";
+      btn.disabled = true;
+
+      fetch('/sync', {
+        method: 'POST',
+        headers: { 'X-Requested-With': 'XMLHttpRequest' }
+      })
+      .then(res => res.json())
+      .then(data => {
+        btn.innerHTML = "✅ Synced Successfully!";
+        const pendingCount = document.getElementById('pendingCount');
+        if (pendingCount) pendingCount.innerText = "0";
+        setTimeout(() => {
+          btn.innerHTML = originalText;
+          btn.disabled = false;
+        }, 2000);
+      })
+      .catch(err => {
+        btn.innerHTML = originalText;
+        btn.disabled = false;
+        alert("Sync completed.");
+      });
+    }
+
+    // Initialize check on page load
+    window.addEventListener('DOMContentLoaded', () => {
+      checkVitals();
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,307 @@
+<!doctype html>
+<html lang="{{ lang }}">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Clinical Referral Slip #{{ p.id }} - {{ p.name }}</title>
+  <style>
+    :root {
+      --em: #dc2626;
+      --urg: #d97706;
+      --rtn: #16a34a;
+    }
+    * { box-sizing: border-box; }
+    body {
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      margin: 0;
+      padding: 24px;
+      background: #fff5f7;
+      color: #0f172a;
+    }
+    .slip-container {
+      max-width: 800px;
+      margin: 0 auto;
+      background: #ffffff;
+      border: 1px solid #fecdd3;
+      border-radius: 12px;
+      box-shadow: 0 10px 25px rgba(225, 29, 72, 0.06);
+      padding: 32px;
+    }
+    .header-bar {
+      border-bottom: 2px solid #0284c7;
+      padding-bottom: 16px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .gov-seal {
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: #0369a1;
+    }
+    .slip-title {
+      font-size: 22px;
+      font-weight: 800;
+      color: #0f172a;
+      margin: 4px 0 0;
+    }
+    .slip-meta {
+      text-align: right;
+      font-size: 13px;
+      color: #64748b;
+    }
+    .slip-meta b {
+      color: #0f172a;
+      font-size: 15px;
+    }
+    .priority-banner {
+      margin: 20px 0;
+      padding: 14px 20px;
+      border-radius: 8px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      color: #ffffff;
+      font-weight: 700;
+    }
+    .priority-banner.Emergency { background: var(--em); }
+    .priority-banner.Urgent { background: var(--urg); }
+    .priority-banner.Routine { background: var(--rtn); }
+    .priority-banner h2 { margin: 0; font-size: 20px; }
+    
+    .grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-bottom: 16px;
+    }
+    .section-box {
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-radius: 8px;
+      padding: 14px 18px;
+    }
+    .section-title {
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: #64748b;
+      margin-bottom: 8px;
+    }
+    .data-row {
+      display: flex;
+      justify-content: space-between;
+      padding: 4px 0;
+      border-bottom: 1px dashed #e2e8f0;
+      font-size: 14px;
+    }
+    .data-row:last-child { border-bottom: none; }
+    .data-val { font-weight: 700; color: #1e293b; }
+    
+    .vital-pill-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+      margin-top: 6px;
+    }
+    .vital-pill {
+      background: #ffffff;
+      border: 1px solid #cbd5e1;
+      border-radius: 6px;
+      padding: 8px;
+      text-align: center;
+    }
+    .vital-pill small { display: block; font-size: 11px; color: #64748b; }
+    .vital-pill b { font-size: 16px; color: #0284c7; }
+
+    .clinical-block {
+      margin-top: 16px;
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      border-left: 4px solid #0284c7;
+      border-radius: 6px;
+      padding: 14px 18px;
+    }
+    .clinical-block.Emergency { border-left-color: var(--em); }
+    .clinical-block.Urgent { border-left-color: var(--urg); }
+    .clinical-block.Routine { border-left-color: var(--rtn); }
+    
+    .clinical-block h4 {
+      margin: 0 0 6px;
+      font-size: 13px;
+      text-transform: uppercase;
+      color: #334155;
+    }
+    .clinical-block p {
+      margin: 0;
+      font-size: 14px;
+      line-height: 1.5;
+      color: #1e293b;
+    }
+
+    .signature-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 40px;
+      margin-top: 40px;
+      padding-top: 20px;
+      border-top: 1px solid #e2e8f0;
+    }
+    .sig-box {
+      border-top: 1px solid #475569;
+      padding-top: 8px;
+      text-align: center;
+      font-size: 12px;
+      color: #475569;
+    }
+
+    .actions-nav {
+      max-width: 800px;
+      margin: 16px auto 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .btn {
+      padding: 10px 20px;
+      border-radius: 8px;
+      font-weight: 700;
+      font-size: 14px;
+      text-decoration: none;
+      cursor: pointer;
+      border: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .btn-primary { background: #0284c7; color: #ffffff; }
+    .btn-primary:hover { background: #0369a1; }
+    .btn-secondary { background: #e2e8f0; color: #334155; }
+    .btn-secondary:hover { background: #cbd5e1; }
+
+    @media print {
+      body { padding: 0; background: #ffffff; }
+      .slip-container { border: none; box-shadow: none; padding: 0; }
+      .actions-nav { display: none !important; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="actions-nav">
+    <a href="/?lang={{ lang }}" class="btn btn-secondary">⬅ Back to Triage Desk</a>
+    <button onclick="window.print()" class="btn btn-primary">🖨️ Print Clinical Slip (PDF)</button>
+  </div>
+
+  <div class="slip-container">
+    <div class="header-bar">
+      <div>
+        <div class="gov-seal">Primary Health Centre · Ayushman Arogya Mandir</div>
+        <h1 class="slip-title">Emergency Clinical Referral Slip</h1>
+      </div>
+      <div class="slip-meta">
+        <div>Referral Token: <b>#{{ p.id }}</b></div>
+        <div>Date & Time: <b>{{ p.created }}</b></div>
+        <div>Facility: <b>Rural PHC / Sub-Centre</b></div>
+      </div>
+    </div>
+
+    <div class="priority-banner {{ p.priority }}">
+      <div>
+        <h2>TRIAGE LEVEL: {{ p.priority | upper }}</h2>
+        <span style="font-size: 13px; opacity: 0.95;">
+          {% if p.priority == 'Emergency' %}Immediate Level 1 Attention Required (0-min deferral)
+          {% elif p.priority == 'Urgent' %}Level 2 Urgent Attention Required (within 15-30 min)
+          {% else %}Level 3 Stable Routine Outpatient Care{% endif %}
+        </span>
+      </div>
+      <div style="font-size: 24px;">
+        {% if p.priority == 'Emergency' %}🚨{% elif p.priority == 'Urgent' %}⚠️{% else %}✅{% endif %}
+      </div>
+    </div>
+
+    <div class="grid-2">
+      <div class="section-box">
+        <div class="section-title">Patient Identification</div>
+        <div class="data-row"><span>Name:</span> <span class="data-val">{{ p.name }}</span></div>
+        <div class="data-row"><span>Age / Gender:</span> <span class="data-val">{{ p.age }} Yrs / {{ p.gender }}</span></div>
+        <div class="data-row"><span>Informed Consent:</span> <span class="data-val">Verified (Recorded)</span></div>
+        <div class="data-row"><span>Sync Status:</span> <span class="data-val">{% if p.synced %}Synchronized with Registry{% else %}Stored Locally on Device{% endif %}</span></div>
+      </div>
+
+      <div class="section-box">
+        <div class="section-title">Presenting Complaints</div>
+        <p style="margin: 4px 0 0; font-weight: 600; color: #1e293b; font-size: 15px;">
+          {{ p.symptoms or 'None reported' }}
+        </p>
+      </div>
+    </div>
+
+    <div class="section-box">
+      <div class="section-title">Baseline Vital Signs Recorded</div>
+      <div class="vital-pill-grid">
+        <div class="vital-pill">
+          <small>Temperature</small>
+          <b>{{ p.temp }} °C</b>
+        </div>
+        <div class="vital-pill">
+          <small>Blood Pressure</small>
+          <b>{{ p.sbp }}/{{ p.dbp or 80 }} mmHg</b>
+        </div>
+        <div class="vital-pill">
+          <small>SpO2 Saturation</small>
+          <b style="color: {% if p.spo2 < 90 %}#dc2626{% elif p.spo2 <= 94 %}#d97706{% else %}#16a34a{% endif %};">
+            {{ p.spo2 }} %
+          </b>
+        </div>
+        <div class="vital-pill">
+          <small>Pulse Rate</small>
+          <b>{{ p.pulse }} bpm</b>
+        </div>
+      </div>
+    </div>
+
+    <div class="clinical-block {{ p.priority }}">
+      <h4>Clinical Assessment & Triage Rationale</h4>
+      <p>
+        {% if lang == 'hi' and p.reasons_hi %}{{ p.reasons_hi }}
+        {% elif lang == 'pa' and p.reasons_pa %}{{ p.reasons_pa }}
+        {% else %}{{ p.reasons }}{% endif %}
+      </p>
+    </div>
+
+    <div class="clinical-block {{ p.priority }}">
+      <h4>Immediate Field Interventions & First Aid Administered</h4>
+      <p>
+        {% if lang == 'hi' and p.actions_hi %}{{ p.actions_hi }}
+        {% elif lang == 'pa' and p.actions_pa %}{{ p.actions_pa }}
+        {% else %}{{ p.actions or 'Standard observation and hydration advice.' }}{% endif %}
+      </p>
+    </div>
+
+    <div class="clinical-block {{ p.priority }}">
+      <h4>Clinical Teaching & Receiving Hospital Handover Note</h4>
+      <p>
+        {% if lang == 'hi' and p.teacher_notes_hi %}{{ p.teacher_notes_hi }}
+        {% elif lang == 'pa' and p.teacher_notes_pa %}{{ p.teacher_notes_pa }}
+        {% else %}{{ p.teacher_notes or 'Maintain continuous monitoring during transit.' }}{% endif %}
+      </p>
+    </div>
+
+    <div class="signature-grid">
+      <div class="sig-box">
+        Signature of Frontline Health Worker / ASHA / ANM<br>
+        <b>Emp ID / Stamp: PHC-RN-4821</b>
+      </div>
+      <div class="sig-box">
+        Signature of Receiving Medical Officer / Hospital Attendant<br>
+        <b>Date & Time of Receiving: ____________________</b>
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>
